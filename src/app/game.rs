@@ -1,25 +1,43 @@
-use super::grid::OceanGrid;
-use super::player::Player;
+use crate::app::player::{Player, PlayerId};
+use std::thread;
+use std::time::Duration;
 
 #[derive(Debug)]
-pub struct GameState {
-    player1_grid: OceanGrid,
-    player2_grid: OceanGrid,
-    player1: Player,
-    player2: Player,
+pub struct Game {
+    pub current_turn: PlayerId,
+    pub players: [Player; 2],
+    pub game_phase: GamePhase,
 }
 
-impl GameState {
+impl Game {
     pub fn new() -> Self {
+        let player1 = Player::new("Player 1");
+        let player2 = Player::new("Player 2");
+
         Self {
-            player1_grid: OceanGrid::new(),
-            player2_grid: OceanGrid::new(),
-            player1: Player::new("Player 1"),
-            player2: Player::new("Player 2"),
+            current_turn: player1.id,
+            players: [player1, player2],
+            game_phase: GamePhase::Placing,
         }
     }
 
-    pub fn run(&self) {
-        // Game loop or execution logic
+    pub fn print_state(&self) {
+        // Todo
     }
+
+    pub fn run(&self) {
+        loop {
+            // Sleep for a short duration to simulate game loop timing
+            thread::sleep(Duration::from_millis(500));
+            // Print that this line was hit
+            println!("Game loop iteration");
+        }
+    }
+}
+
+#[derive(Debug)]
+enum GamePhase {
+    Placing,
+    InProgress,
+    GameOver { winner: PlayerId },
 }

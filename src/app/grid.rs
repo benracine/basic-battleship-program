@@ -1,28 +1,28 @@
-#[derive(Debug)]
-pub struct Cell {
-    pub file: char,
-    pub rank: u8,
-    pub state: CellState,
-}
-
-#[derive(Default, Debug)]
-pub enum CellState {
-    #[default]
-    Empty,
-    Occupied,
-    Hit,
-    Miss,
-}
+use super::cell::{Cell, CellState};
 
 #[derive(Debug)]
-pub struct OceanGrid {
+pub struct Grid {
     pub cells: Vec<Vec<Cell>>,
 }
 
-impl OceanGrid {
+impl Grid {
     pub fn new() -> Self {
         Self {
-            cells: vec![vec![]],
+            // Need to lay out all the actual cells in the grid
+            // None of this empty vector nonsense
+            // file should vary from 'A' to 'J'
+            // rank should vary from 1 to 10
+            cells: (0u8..10u8)
+                .map(|y| {
+                    (0u8..10u8)
+                        .map(|x| Cell {
+                            x,
+                            y,
+                            state: CellState::default(),
+                        })
+                        .collect()
+                })
+                .collect(),
         }
     }
 }
