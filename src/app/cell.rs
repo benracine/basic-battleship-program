@@ -23,7 +23,7 @@ impl Cell {
 }
 
 #[derive(Debug, Default, Clone, Copy)]
-enum CellStatus {
+pub enum CellStatus {
     #[default]
     Empty,
     Occupied(ShipId),

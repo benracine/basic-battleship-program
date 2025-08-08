@@ -9,4 +9,3 @@ A simple command-line implementation of the classic Battleship game, written in 
 - Ships with variable lengths
 - Random ship placement
 - Hit/miss tracking and win condition
-

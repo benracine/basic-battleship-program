@@ -10,8 +10,9 @@ pub type PlayerId = uuid::Uuid;
 pub struct Player {
     pub id: PlayerId,
     pub name: String,
-    pub grid: Grid,
     pub ships: [Ship; 5],
+    pub my_grid: Grid,
+    pub tracking_grid: Grid,
 }
 
 impl Player {
@@ -31,7 +32,8 @@ impl Player {
         Self {
             id: Uuid::new_v4(),
             name: name.to_owned(),
-            grid: Grid::new(),
+            my_grid: Grid::new(),
+            tracking_grid: Grid::new(),
             ships,
         }
     }
