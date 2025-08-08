@@ -1,6 +1,7 @@
-use crate::app::player::{Player, PlayerId};
 use std::thread;
 use std::time::Duration;
+
+use crate::app::player::{Player, PlayerId};
 
 #[derive(Debug, Default)]
 enum Phase {
@@ -30,13 +31,13 @@ impl Game {
     }
 
     pub fn print_state(&self) {
-        println!("{:#?}", self);
+        println!("{:?}", self);
     }
 
     pub fn run(&self) {
         loop {
-            thread::sleep(Duration::from_millis(500));
-            println!("Game loop iteration");
+            // thread::sleep(Duration::from_millis(500));
+            // println!("Game loop iteration");
         }
     }
 }

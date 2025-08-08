@@ -5,29 +5,29 @@ pub struct RowIndex(u8);
 pub struct ColIndex(u8);
 
 impl RowIndex {
-    pub fn new(val: u8) -> Option<Self> {
+    pub const fn new(val: u8) -> Option<Self> {
         if val <= 9 { Some(Self(val)) } else { None }
     }
 
-    pub fn get(self) -> u8 {
+    pub const fn get(self) -> u8 {
         self.0
     }
 
-    pub fn iter() -> impl Iterator<Item = RowIndex> {
+    pub fn iter() -> impl Iterator<Item = Self> {
         (0..10).map(RowIndex)
     }
 }
 
 impl ColIndex {
-    pub fn new(val: u8) -> Option<Self> {
+    pub const fn new(val: u8) -> Option<Self> {
         if val <= 9 { Some(Self(val)) } else { None }
     }
 
-    pub fn get(self) -> u8 {
+    pub const fn get(self) -> u8 {
         self.0
     }
 
-    pub fn iter() -> impl Iterator<Item = ColIndex> {
+    pub fn iter() -> impl Iterator<Item = Self> {
         (0..10).map(ColIndex)
     }
 }

@@ -1,23 +1,25 @@
 use strum_macros::EnumIter;
 use uuid::Uuid;
 
+pub type ShipId = Uuid;
+
 #[derive(EnumIter, Debug, Clone, Copy)]
 pub enum ShipName {
-    Carrier,
     Battleship,
+    Carrier,
     Cruiser,
-    Submarine,
     Destroyer,
+    Submarine,
 }
 
 impl ShipName {
-    pub fn len(&self) -> usize {
+    pub const fn len(self) -> usize {
         match self {
-            ShipName::Carrier => 5,
-            ShipName::Battleship => 10,
-            ShipName::Cruiser => 8,
-            ShipName::Submarine => 6,
-            ShipName::Destroyer => 7,
+            Self::Carrier => 5,
+            Self::Battleship => 4,
+            Self::Cruiser => 3,
+            Self::Submarine => 3,
+            Self::Destroyer => 2,
         }
     }
 }
@@ -29,8 +31,6 @@ pub enum Direction {
     Vertical,
 }
 
-pub type ShipId = Uuid;
-
 #[derive(Debug)]
 pub struct Ship {
     pub id: ShipId,
@@ -41,9 +41,13 @@ pub struct Ship {
 impl Ship {
     pub fn new(name: ShipName, direction: Direction) -> Self {
         Self {
-            name: name,
-            direction: direction,
             id: Uuid::new_v4(),
+            name,
+            direction,
         }
+    }
+
+    pub fn size(&self) -> usize {
+        self.name.len()
     }
 }

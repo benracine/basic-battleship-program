@@ -9,7 +9,7 @@ pub struct Cell {
 }
 
 impl Cell {
-    pub fn new(x: RowIndex, y: ColIndex) -> Self {
+    pub const fn new(x: RowIndex, y: ColIndex) -> Self {
         Self {
             x,
             y,
@@ -17,7 +17,7 @@ impl Cell {
         }
     }
 
-    pub fn set_status(&mut self, status: CellStatus) {
+    pub const fn set_status(&mut self, status: CellStatus) {
         self.status = status;
     }
 }
