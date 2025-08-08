@@ -1,35 +1,37 @@
-use super::{
-    grid::Grid,
-    ship::{Ship, ShipName},
-};
-use rand::prelude::*;
 use strum::IntoEnumIterator;
+use uuid::Uuid;
 
-pub type PlayerId = u32;
+use crate::app::grid::Grid;
+use crate::app::ship::{self, Ship, ShipName};
+
+pub type PlayerId = uuid::Uuid;
 
 #[derive(Debug)]
 pub struct Player {
     pub id: PlayerId,
     pub name: String,
     pub grid: Grid,
-    pub ships: Vec<Ship>,
+    pub ships: [Ship; 5],
 }
 
 impl Player {
     pub fn new(name: &str) -> Self {
-        let mut rng = rand::rng();
-        let grid = Grid::new();
-        let rows = grid.cells.len() as u8;
-        let cols = grid.cells[0].len() as u8;
-        let ships = ShipName::iter()
-            .map(|ship_name| Ship::new(ship_name, rows, cols))
-            .collect();
-        let id: u32 = rng.random::<u32>();
-
+        let ships: [Ship; 5] = ShipName::iter()
+            .map(|ship_name| {
+                let direction = if rand::random() {
+                    ship::Direction::Horizontal
+                } else {
+                    ship::Direction::Vertical
+                };
+                Ship::new(ship_name, direction)
+            })
+            .collect::<Vec<_>>()
+            .try_into()
+            .expect("Expected exactly 5 ship types");
         Self {
-            id,
+            id: Uuid::new_v4(),
             name: name.to_owned(),
-            grid,
+            grid: Grid::new(),
             ships,
         }
     }

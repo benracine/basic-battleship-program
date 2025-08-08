@@ -2,42 +2,41 @@ use crate::app::player::{Player, PlayerId};
 use std::thread;
 use std::time::Duration;
 
+#[derive(Debug, Default)]
+enum Phase {
+    #[default]
+    InProgress,
+    GameOver {
+        winner: PlayerId,
+    },
+}
+
 #[derive(Debug)]
 pub struct Game {
-    pub current_turn: PlayerId,
-    pub players: [Player; 2],
-    pub game_phase: GamePhase,
+    current_turn: PlayerId,
+    players: [Player; 2],
+    phase: Phase,
 }
 
 impl Game {
     pub fn new() -> Self {
-        let player1 = Player::new("Player 1");
-        let player2 = Player::new("Player 2");
+        let players = [Player::new("Player 1"), Player::new("Player 2")];
 
         Self {
-            current_turn: player1.id,
-            players: [player1, player2],
-            game_phase: GamePhase::Placing,
+            current_turn: players[0].id,
+            players,
+            phase: Phase::default(),
         }
     }
 
     pub fn print_state(&self) {
-        // Todo
+        println!("{:#?}", self);
     }
 
     pub fn run(&self) {
         loop {
-            // Sleep for a short duration to simulate game loop timing
             thread::sleep(Duration::from_millis(500));
-            // Print that this line was hit
             println!("Game loop iteration");
         }
     }
-}
-
-#[derive(Debug)]
-enum GamePhase {
-    Placing,
-    InProgress,
-    GameOver { winner: PlayerId },
 }

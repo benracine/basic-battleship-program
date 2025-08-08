@@ -1,29 +1,25 @@
-use super::cell::{Cell, CellState};
+use crate::app::cell::Cell;
+use crate::app::ranges::{ColIndex, RowIndex};
 
 #[derive(Debug)]
 pub struct Grid {
-    pub cells: Vec<Vec<Cell>>,
+    pub cells: [[Cell; 10]; 10],
 }
 
 impl Grid {
     pub fn new() -> Self {
-        Self {
-            // Need to lay out all the actual cells in the grid
-            // None of this empty vector nonsense
-            // file should vary from 'A' to 'J'
-            // rank should vary from 1 to 10
-            cells: (0u8..10u8)
-                .map(|y| {
-                    (0u8..10u8)
-                        .map(|x| Cell {
-                            x,
-                            y,
-                            state: CellState::default(),
-                        })
-                        .collect()
-                })
-                .collect(),
-        }
+        let cells: [[Cell; 10]; 10] = RowIndex::iter()
+            .map(|row| {
+                ColIndex::iter()
+                    .map(|col| Cell::new(row, col))
+                    .collect::<Vec<_>>()
+                    .try_into()
+                    .expect("Expected exactly 10 columns")
+            })
+            .collect::<Vec<_>>()
+            .try_into()
+            .expect("Expected exactly 10 rows");
+        Self { cells }
     }
 }
 

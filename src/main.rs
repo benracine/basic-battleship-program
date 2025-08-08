@@ -8,5 +8,5 @@ use app::game::Game;
 fn main() {
     let game = Game::new();
     game.print_state();
-    game.run();
+    // game.run();
 }
